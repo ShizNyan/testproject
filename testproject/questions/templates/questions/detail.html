@@ -1,0 +1,94 @@
+<p><h1>Вопрос: {{ question.question_text }}</h1></p> 
+<p>Автор: {{ question.author }};
+	Дата: {{ question.pub_date }};</p>
+	<p>Рейтинг: {{ question.rating }};</p>
+	<form method="POST" action="rating/">
+	{% csrf_token %}
+	<input type="submit" name="rating+" value="+" >
+	<input type="submit" name="rating-" value="-" >
+	</form>
+	<p>Решён? {{ question.solution }}</p>
+	<form method="POST" action="solution/">
+	{% csrf_token %}
+	<input type="submit" name="solution" value="Отметить как решение" >
+	</form>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body class="container">
+    <form method="POST">
+        <a href="edit/">Изменить</a> | <a href="delete/{{question.id}}">Удалить</a>
+    </form>
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body class="container">
+	<h2>Оставьте ответ</h2>
+    <form method="POST" action="create_answer/">
+        {% csrf_token %}
+        <p>
+            <label>Введите автора</label><br>
+            <input type="text" name="author" />
+        </p>
+        <p>
+            <label>Введите ответ</label><br>
+            <input type="text" name="answer_text" />
+        </p>
+		<p>
+			<label>Да, выставьте дату</label><br>
+            <input type="date" name="pub_date" />
+        </p>
+        <input type="submit" value="Сохранить" >
+    </form>
+</body>
+</html>
+
+
+{% if answers %}
+    <ul>
+    {% for answer in answers %}
+<ul>
+<li>Ответ: {{ answer.answer_text }};
+	Автор: {{ answer.author }};
+	Дата: {{ answer.pub_date }};
+	<p>Рейтинг: {{ answer.rating }}</p>
+	<form method="POST" action="rating_answer/">
+	{% csrf_token %}
+	<input type="submit" name="rating+" value="+" >
+	<input type="submit" value="-" >
+	</form>
+	<p>Это решение? {{ answer.solution }}</p>
+	<form method="POST" action="solution_answer/">
+	{% csrf_token %}
+	<input type="submit" name="solution" value="Отметить как решение" >
+	</form>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body class="container">
+    <form method="POST">
+        <a href="edit_answer/">Изменить</a> | <a href="delete_answer/">Удалить</a>
+    </form>
+</body>
+</html>
+</li>
+</ul>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No answers yet.</p>
+{% endif %}
+
+
+

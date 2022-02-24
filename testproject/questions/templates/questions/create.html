@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body class="container">
+    <form method="POST" action="create/">
+        {% csrf_token %}
+        <p>
+            <label>Введите автора</label><br>
+            <input type="text" name="author" />
+        </p>
+        <p>
+            <label>Введите возраст</label><br>
+            <input type="text" name="question_text" />
+        </p>
+		<p>
+            <input type="date" name="pub_date" value="2022-02-22" />
+        </p>
+		<p>
+            <label>Введите тэги</label><br>
+            <input type="text" name="tags" />
+        </p>
+        <input type="submit" value="Сохранить" >
+    </form>
+    <!--p>{% if questions.count > 0 %}
+    <h2>Список вопросов</h2>
+    <table>
+        <thead><th>Id</th><th>Автор</th><th>Вопрос</th><th></th></thead>
+        {% for question in questions %}
+        <tr>
+            <td>{{ question.id }}</td>
+            <td>{{ question.author }}</td>
+            <td>{{ person.question_text }}</td>
+            <td><a href="edit/{{question.id}}">Изменить</a> | <a href="delete/{{question.id}}">Удалить</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}<p-->
+</body>
+</html>

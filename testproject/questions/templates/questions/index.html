@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body class="container">
+	<h2>Задайте вопрос</h2>
+    <form method="POST" action="create/">
+        {% csrf_token %}
+        <p>
+            <label>Введите автора</label><br>
+            <input type="text" name="author" />
+        </p>
+        <p>
+            <label>Введите вопрос</label><br>
+            <input type="text" name="question_text" />
+        </p>
+		<p>
+			<label>Да, выставьте дату</label><br>
+            <input type="date" name="pub_date" />
+        </p>
+		<p>
+            <label>Введите тэги</label><br>
+            <input type="text" name="tags" />
+        </p>
+        <input type="submit" value="Сохранить" >
+    </form>
+	<h2>Список вопросов</h2>
+	<form method="POST" action="search/">
+        {% csrf_token %}
+        <p>
+            <label>Введите тэги для поиска</label><br>
+            <input type="text" name="tags" />
+        </p>
+        <input type="submit" value="Поиск" >
+    </form>
+	{% if latest_question_list or tags_question_list %}
+    <ul>
+    {% for question in latest_question_list %}
+        <li><a href="/questions/{{ question.id }}/">{{ question.question_text }}; Автор: {{ question.author }}; Тэги: {{ question.tags }} </a></li>
+    {% endfor %}
+	{% for question in tags_question_list %}
+        <li><a href="/questions/{{ question.id }}/">{{ question.question_text }}; Автор: {{ question.author }}; Тэги: {{ question.tags }} </a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No questions are available.</p>
+{% endif %}
+</body>
+</html>
+
